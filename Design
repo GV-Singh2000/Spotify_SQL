@@ -1,0 +1,61 @@
+# Design Document
+
+# Simple Spotify Database
+
+By Gurvansh Singh
+Edmonton, Alberta CA
+
+Video overview: [Video Overview](https://youtu.be/G-S_loB2qxg)
+
+## Scope
+
+The purpose of this database is to facilitate the organization and management of music-related information. It includes entities such as Artists, Genres, Albums, Songs, Playlists, and their relationships. The scope encompasses the need for users to organize their favorite songs, explore details about artists, albums, and genres, and create playlists. Outside the scope are features like user authentication and more advanced functionalities like user preferences, ratings, or comments.
+
+## Functional Requirements
+
+Users should be able to:
+* Add, update, or delete information about artists, genres, albums, and songs.
+* Create and manage playlists.
+* Retrieve details about songs, artists, and playlists.
+* View the total number of songs in a playlist of a specific genre and year.
+
+Beyond the scope are features like user authentication, authorization, and more advanced user-specific functionalities.
+
+## Representation
+
+Entities are captured in SQLite tables with the following schema.
+
+### Entities
+
+The chosen entities for representation in the database are:
+* **Artists**: Represents information about music artists.
+* **Genres**: Contains details about music genres.
+* **Albums**: Stores information about music albums, including the artist they belong to.
+* **Songs**: Contains details about individual songs, including the album, genre, and release date.
+* **Playlists**: Allows users to create playlists with a collection of songs.
+* **Playlist_Songs**: Represents the many-to-many relationship between playlists and songs.
+
+Attributes include various properties like artist_name, genre_name, album_name, song_name, release_date, and playlist_name.
+
+### Relationships
+
+The below entity relationship diagram describes the relationships among the entities in the database.
+
+![Entity Relationship Diagram](<https://mermaid.ink/img/pako:eNp9U8tugzAQ_BVrz8kPcGubSM2hvZRDDkhoi1epVT8iYw4R4d-LjaGASXzz7Hh2PPa2UBlOkAHZg8CLRVVo1i-0TtSOtcPuHykFZ6fPPIE1KmL58RwrXVSR341aiHgg1QjoSsIvS5KwppKjI3Z4yY9P7cSmtdGXeU-_T1oGcKPjtsELaUsJ-sBdtBHOzH1siwzodnxXiTe5eoYRS4SmwnOtch3PQ8Ekt15p8Tnu9_3etPGRM1bAK8n-TM1yU8D8A0Ri6Ox5b0Y7FLoeWaEQSUNsnvWOE2EKIpKWl9mSXDLWBk66kg2nwIYdKLIKBe-nIORSgPshRQV4Kkf762ldz8PGma-briBztqEdNFf_9HFuRpC4cMZ-DFMVhqv7A9tyCxA?type=png>)
+
+- Artists are associated with albums through the Albums table.
+- Albums are associated with songs through the Songs table.
+- Songs are associated with genres through the Genres table.
+- Playlists are associated with songs through the Playlist_Songs table.
+
+## Optimizations
+
+Optimizations implemented include:
+* Indexes on `playlist_name` in the `playlists` table, `genre_name` in the `genres` table, `release_date` in the `songs` table, and a composite key index on `playlist_id` and `song_id` in the `playlist_songs` table for improved query performance.
+
+## Limitations
+
+Limitations of the design include:
+* Simplified representation, may require further refinement for complex use cases.
+* Lack of user authentication and authorization features.
+* Exclusion of advanced user-specific functionalities like preferences, ratings, or comments.
